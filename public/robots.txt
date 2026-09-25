@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://falaak.web.app/sitemap.xml
+
+# Block admin/temp routes
+Disallow: /admin/
+Disallow: /temp/
