@@ -1,19 +1,16 @@
-# مِداد | Midad
+# 🎬 منصة فلك (Falak TV)
 
-**AI Markdown → DOCX · PDF · Google Docs**
+منصة بث مجانية لمشاهدة الأفلام والمسلسلات بجودة HD و 4K مع نظام روابط ثابتة (Dynamic Permalinks) وبحث فوري.
 
-منصة تحويل ذكية تحوّل Markdown المُنتَج من ChatGPT وClaude وGemini إلى مستندات Word وPDF وGoogle Docs منسّقة بشكل احترافي.
+- **الرابط المباشر:** [https://falaak.web.app](https://falaak.web.app)
+- **النطاق البديل:** [https://falaak.firebaseapp.com](https://falaak.firebaseapp.com)
 
 ---
 
-## 🚀 النشر السريع
+## 🚀 طريقة النشر والتحديث (Deployment)
 
-```bash
-# 1. تسجيل الدخول إلى Firebase
-firebase login
-
-# 2. اختيار المشروع
-firebase use quillmarksa
-
-# 3. النشر
-firebase deploy --only hosting
+### 1. المتطلبات:
+- تثبيت [Node.js](https://nodejs.org/)
+- تثبيت أداة Firebase CLI:
+  ```bash
+  npm install -g firebase-tools
