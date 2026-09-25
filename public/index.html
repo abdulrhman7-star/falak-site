@@ -2608,6 +2608,34 @@ function setupHeaderScroll() {
         header.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
 }
+  
+// ==================== SERVICE WORKER REGISTRATION ====================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('[PWA] Service Worker registered:', registration.scope);
+        
+        // فحص التحديثات كل ساعة
+        setInterval(() => registration.update(), 60 * 60 * 1000);
+        
+        // عندما يجد SW جديد
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // نسخة جديدة متوفرة
+              if (confirm('نسخة جديدة من فلك متوفرة! هل تريد التحديث الآن؟')) {
+                newWorker.postMessage('SKIP_WAITING');
+                window.location.reload();
+              }
+            }
+          });
+        });
+      })
+      .catch((err) => console.warn('[PWA] SW registration failed:', err));
+  });
+}
 </script>
 </body>
 </html>
