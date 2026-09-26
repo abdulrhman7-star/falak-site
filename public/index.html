@@ -8,9 +8,9 @@
 <!-- ===== SEO & METADATA (Arabic + English) ===== -->
 <title id="metaDocTitle">فلك Falak — مشاهدة أحدث الأفلام والمسلسلات مترجمة مجاناً بجودة 4K/HD | Watch the Latest Movies & TV Shows Subtitled for Free in 4K/HD</title>
 
-<meta name="description" id="metaDescription" content="منصة فلك (Falak TV) لمشاهدة وتحميل الأفلام والمسلسلات المترجمة والمدبلجة أونلاين مجاناً بأعلى جودة HD و 4K. سيرفرات فائقة السرعة، بدون إعلانات مزعجة، وترجمة بلغات متعددة. | Falak TV is a platform for watching and downloading subtitled and dubbed movies and TV shows online for free in the highest HD and 4K quality. Ultra-fast servers, no annoying ads, and subtitles in multiple languages.">
+<meta name="description" id="metaDescription" content="منصة فلك (Falak TV) لمشاهدة وتحميل الأفلام والمسلسلات المترجمة والمدبلجة أونلاين مجاناً بأعلى جودة HD و 4K. سيرفرات فائقة السرعة، بدون إعلانات مزعجة، وترجمة بلغات متعددة.">
 
-<meta name="keywords" content="فلك, Falak, Falak TV, مشاهدة أفلام, مسلسلات مترجمة, أفلام 2026, مسلسلات 2026, أفلام أونلاين, بث مباشر, سيما, سينما مجانية, watch movies online free, stream hd series, subtitled TV shows, 2026 movies, 2026 series, movies online, live streaming, free cinema">
+<meta name="keywords" content="فلك, Falak, Falak TV, مشاهدة أفلام, مسلسلات مترجمة, أفلام 2026, مسلسلات 2026, أفلام أونلاين, بث مباشر, سيما, سينما مجانية">
 <meta name="author" content="Falak Network">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#07080b">
@@ -35,6 +35,8 @@
 <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='fG' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ff1e27'/%3E%3Cstop offset='100%25' stop-color='%238a0309'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='%2308090d' stroke='url(%23fG)' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='25' ry='9' fill='none' stroke='%23ff3b44' stroke-width='2.5' transform='rotate(-28 32 32)' opacity='0.85'/%3E%3Ccircle cx='32' cy='32' r='10' fill='url(%23fG)'/%3E%3Cpath d='M32 16 L34.5 28 L46 32 L34.5 36 L32 48 L29.5 36 L18 32 L29.5 28 Z' fill='%23ffffff'/%3E%3C/svg%3E">
@@ -193,6 +195,7 @@ img { max-width: 100%; height: auto; display: block; }
     padding: 7px 16px;
     border-radius: var(--radius-full);
     transition: var(--transition);
+    cursor: pointer;
 }
 .nav-links a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
 .nav-links a.active {
@@ -373,6 +376,7 @@ img { max-width: 100%; height: auto; display: block; }
 .lang-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     height: 38px;
     padding: 0 12px;
@@ -423,6 +427,242 @@ img { max-width: 100%; height: auto; display: block; }
     margin-inline-start: auto;
     color: var(--primary);
     font-weight: 900;
+}
+
+/* ===================== AUTH & FAVORITES (HEADER) ===================== */
+.icon-action-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-size: 16px;
+    transition: var(--transition);
+}
+.icon-action-btn:hover { border-color: var(--primary); background: var(--surface-hover); transform: translateY(-1px); }
+.fav-count-badge {
+    position: absolute;
+    top: -4px;
+    inset-inline-end: -4px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: var(--radius-full);
+    background: var(--primary-gradient);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 2px var(--bg);
+    line-height: 1;
+}
+.fav-count-badge.active { display: inline-flex; }
+
+.auth-wrap { position: relative; }
+.auth-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: var(--radius-full);
+    background: var(--primary-gradient);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 15px var(--primary-glow);
+    transition: var(--transition);
+    white-space: nowrap;
+    font-family: inherit;
+}
+.auth-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px var(--primary-glow); }
+.auth-btn.signed-in {
+    background: var(--surface);
+    border-color: var(--border);
+    box-shadow: none;
+}
+.auth-btn.signed-in:hover { border-color: var(--primary); }
+.auth-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-hover);
+    flex-shrink: 0;
+}
+.auth-label { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.auth-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline-end: 0;
+    width: 250px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 8px;
+    z-index: 1300;
+    display: none;
+}
+.auth-dropdown.open { display: block; }
+.auth-user-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+}
+.auth-user-head img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-hover);
+    background: var(--surface);
+    flex-shrink: 0;
+}
+.auth-user-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.auth-user-email {
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.auth-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: var(--radius-md);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: start;
+    font-family: inherit;
+    transition: var(--transition);
+}
+.auth-menu-item:hover { background: var(--surface-hover); color: #fff; }
+.auth-menu-item.danger:hover { background: rgba(255, 30, 39, 0.15); color: #ff6b73; }
+.auth-sync-note {
+    font-size: 10px;
+    color: var(--text-dim);
+    padding: 6px 10px 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===================== FAVORITES DRAWER ===================== */
+.fav-drawer {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    border-inline-end: none;
+    border-inline-start: 1px solid var(--border);
+}
+.fav-drawer-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+}
+.fav-drawer-title { font-size: 14px; font-weight: 900; }
+.fav-close-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.fav-close-btn:hover { background: var(--primary); color: #fff; }
+.fav-list { display: flex; flex-direction: column; }
+.fav-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.fav-item:hover { border-color: var(--primary); background: var(--surface-hover); transform: translateX(-2px); }
+html[dir="ltr"] .fav-item:hover { transform: translateX(2px); }
+.fav-item-poster {
+    width: 44px;
+    height: 64px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: var(--bg-elevated);
+    flex-shrink: 0;
+}
+.fav-item-body { flex: 1; min-width: 0; }
+.fav-item-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fav-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+.fav-remove-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 30, 39, 0.12);
+    color: #ff6b73;
+    border: 1px solid rgba(255, 30, 39, 0.28);
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+.fav-remove-btn:hover { background: var(--primary); color: #fff; border-color: transparent; }
+.fav-empty {
+    text-align: center;
+    padding: 40px 14px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.8;
 }
 
 /* ===================== HERO ===================== */
@@ -493,6 +733,7 @@ html[dir="ltr"] .hero-gradient-overlay {
     cursor: pointer;
     min-height: 42px;
     border: none;
+    font-family: inherit;
 }
 .btn-primary {
     background: var(--primary-gradient);
@@ -514,6 +755,17 @@ html[dir="ltr"] .hero-gradient-overlay {
 .btn-share:hover {
     background: rgba(245, 158, 11, 0.22);
     border-color: var(--gold);
+}
+.btn-fav {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: #fff;
+}
+.btn-fav:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--border-hover); }
+.btn-fav.active {
+    background: rgba(245, 158, 11, 0.16);
+    border-color: var(--gold);
+    color: var(--gold);
 }
 .btn-sm { padding: 6px 14px; font-size: 11px; min-height: 34px; }
 
@@ -696,6 +948,31 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     font-size: 9px;
     font-weight: 800;
     color: #fff;
+}
+.card-fav-quick {
+    position: absolute;
+    top: 6px;
+    inset-inline-end: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(7, 8, 11, 0.8);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    z-index: 3;
+    opacity: 0;
+    transition: var(--transition);
+}
+.movie-card:hover .card-fav-quick { opacity: 1; }
+.card-fav-quick:hover { background: var(--primary); border-color: transparent; }
+.card-fav-quick.active {
+    opacity: 1;
+    background: rgba(245, 158, 11, 0.9);
+    border-color: transparent;
+    color: #1a1205;
 }
 .card-info {
     padding: 8px;
@@ -1026,27 +1303,6 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     gap: 8px;
 }
 
-/* ===================== ACCOUNT & SAVED ===================== */
-.account-actions{display:flex;align-items:center;gap:7px}
-.account-btn,.saved-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 12px;border-radius:var(--radius-full);background:var(--surface);border:1px solid var(--border);color:#fff;font-size:12px;font-weight:800;transition:var(--transition);white-space:nowrap}
-.account-btn:hover,.saved-btn:hover{background:var(--surface-hover);border-color:var(--border-hover)}
-.saved-count{min-width:18px;height:18px;padding:0 4px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--primary);color:#fff;font-size:9px;font-weight:900}
-.user-avatar{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--border-hover)}
-.account-menu{position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:250px;background:var(--bg-elevated);border:1px solid var(--border-hover);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:8px;z-index:2000;display:none}
-.account-menu.open{display:block}
-.account-user-info{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--border);margin-bottom:6px}
-.account-user-name{font-size:12px;font-weight:800;color:#fff}.account-user-email{font-size:10px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis}
-.account-menu-item{width:100%;padding:10px 12px;border-radius:var(--radius-md);text-align:start;color:var(--text-muted);font-size:12px;font-weight:700}
-.account-menu-item:hover{background:var(--surface-hover);color:#fff}
-.saved-modal{position:fixed;inset:0;z-index:2500;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
-.saved-modal.active{display:flex}.saved-dialog{width:min(1000px,100%);max-height:min(85vh,760px);overflow:hidden;display:flex;flex-direction:column;background:var(--bg-elevated);border:1px solid var(--border-hover);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)}
-.saved-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;border-bottom:1px solid var(--border)}
-.saved-dialog-title{font-size:18px;font-weight:900}.saved-dialog-body{padding:16px;overflow-y:auto}
-.saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
-.saved-empty{text-align:center;padding:50px 20px;color:var(--text-muted);font-size:13px}
-.auth-note{padding:18px;border:1px dashed var(--border-hover);border-radius:var(--radius-lg);text-align:center;color:var(--text-muted)}
-.auth-note button{margin-top:12px}
-@media(max-width:850px){.account-btn span:not(.user-avatar),.saved-btn .saved-label{display:none}.account-btn,.saved-btn{width:38px;padding:0}}
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 850px) {
     .nav-links, .search-container { display: none; }
@@ -1056,6 +1312,7 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     .detail-poster-img { width: 130px; margin: 0 auto; }
     .detail-badges-row, .cast-chip-list { justify-content: center; }
     .footer-grid-layout { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .nav-actions { gap: 6px; }
 }
 
 @media (max-width: 480px) {
@@ -1065,6 +1322,17 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     .hero-body { padding: 24px 0; }
     .footer-grid-layout { grid-template-columns: 1fr; }
     .filter-grid { grid-template-columns: 1fr 1fr; }
+
+    .nav-actions { gap: 5px; }
+    .icon-action-btn,
+    .mobile-search-trigger,
+    .lang-btn { width: 34px; height: 34px; padding: 0; font-size: 14px; }
+    .lang-btn #currentLangLabel { display: none; }
+    .auth-btn { height: 34px; padding: 0 10px; gap: 5px; font-size: 11px; }
+    .auth-btn .auth-label { display: none; }
+    .auth-btn .auth-avatar { width: 22px; height: 22px; }
+    .fav-count-badge { top: -3px; inset-inline-end: -3px; }
+    .brand-logo-svg { width: 32px; height: 32px; }
 }
 </style>
 </head>
@@ -1072,7 +1340,7 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
 
 <div class="toast-shelf" id="toastShelf"></div>
 
-<!-- SIDEBAR -->
+<!-- SIDEBAR (GENRES) -->
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
 <aside class="app-sidebar" id="sidebar" role="navigation">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border);">
@@ -1080,6 +1348,16 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         <button type="button" onclick="closeSidebar()" style="font-size:16px; color:var(--text-muted); width:28px; height:28px; border-radius:50%; background:var(--surface);" aria-label="Close">✕</button>
     </div>
     <div id="sidebarGenresList" style="display:flex; flex-direction:column; gap:6px;"></div>
+</aside>
+
+<!-- FAVORITES DRAWER -->
+<div class="sidebar-backdrop" id="favBackdrop" onclick="closeFavorites()"></div>
+<aside class="app-sidebar fav-drawer" id="favoritesDrawer" role="dialog" aria-label="Favorites">
+    <div class="fav-drawer-head">
+        <span class="fav-drawer-title" id="favDrawerTitle">🔖 المحفوظات</span>
+        <button type="button" class="fav-close-btn" onclick="closeFavorites()" aria-label="Close">✕</button>
+    </div>
+    <div id="favoritesList" class="fav-list"></div>
 </aside>
 
 <!-- HEADER -->
@@ -1116,17 +1394,6 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         </div>
 
         <div class="nav-actions">
-            <div class="account-actions">
-                <button type="button" class="saved-btn" id="savedBtn" onclick="openSavedModal()" aria-label="Saved">
-                    <span>🔖</span><span class="saved-label" id="savedLabel">المحفوظات</span><span class="saved-count" id="savedCount">0</span>
-                </button>
-                <div style="position:relative;">
-                    <button type="button" class="account-btn" id="authBtn" onclick="handleAuthButton()" aria-label="Login">
-                        <span>🔐</span><span id="authBtnLabel">تسجيل الدخول</span>
-                    </button>
-                    <div class="account-menu" id="accountMenu"></div>
-                </div>
-            </div>
             <div class="search-container" id="searchContainer">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
@@ -1138,6 +1405,38 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
             </div>
 
             <button type="button" class="mobile-search-trigger" onclick="openMobileSearch()" aria-label="Search">🔍</button>
+
+            <!-- FAVORITES BUTTON -->
+            <button type="button" class="icon-action-btn" id="favoritesBtn" onclick="openFavorites()" aria-label="Favorites" title="المحفوظات">
+                🔖
+                <span class="fav-count-badge" id="favCountBadge">0</span>
+            </button>
+
+            <!-- AUTH BUTTON -->
+            <div class="auth-wrap" id="authWrap">
+                <button type="button" class="auth-btn" id="authBtn" onclick="handleAuthClick(event)" aria-label="Account">
+                    <img class="auth-avatar" id="authAvatar" alt="" style="display:none;">
+                    <span id="authIcon">👤</span>
+                    <span class="auth-label" id="authBtnLabel">تسجيل الدخول</span>
+                </button>
+
+                <div class="auth-dropdown" id="authDropdown">
+                    <div class="auth-user-head">
+                        <img id="authDropAvatar" src="" alt="">
+                        <div style="min-width:0;">
+                            <div class="auth-user-name" id="authDropName">—</div>
+                            <div class="auth-user-email" id="authDropEmail">—</div>
+                        </div>
+                    </div>
+                    <div class="auth-sync-note">☁️ <span id="authSyncNote">محفوظاتك متزامنة سحابياً</span></div>
+                    <button type="button" class="auth-menu-item" onclick="closeAuthDropdown(); openFavorites();">
+                        🔖 <span id="authMenuFavLabel" data-i18n="my_favorites">المحفوظات</span>
+                    </button>
+                    <button type="button" class="auth-menu-item danger" onclick="doSignOut()">
+                        🚪 <span data-i18n="signout_btn">تسجيل الخروج</span>
+                    </button>
+                </div>
+            </div>
 
             <div style="position:relative;">
                 <button type="button" class="lang-btn" id="langSwitchBtn" aria-label="Change Language">
@@ -1225,8 +1524,10 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
 
                     <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
                         <button type="button" class="btn btn-primary" id="startWatchBtn" data-i18n="btn_watch">▶ مشاهدة العمل</button>
+                        <button type="button" class="btn btn-fav" id="favToggleBtn" onclick="toggleCurrentFavorite()">
+                            <span id="favToggleIcon">🔖</span> <span id="favToggleLabel">أضف للمحفوظات</span>
+                        </button>
                         <button type="button" class="btn btn-share" id="shareMediaBtn" onclick="shareCurrentMedia()">🔗 <span data-i18n="btn_share">مشاركة</span></button>
-                        <button type="button" class="btn btn-secondary" id="saveMediaBtn" onclick="toggleSaveCurrentMedia()">🔖 <span id="saveMediaBtnLabel">حفظ</span></button>
                         <button type="button" class="btn btn-secondary" id="trailerBtn" style="display:none;" data-i18n="btn_trailer">🎬 الإعلان</button>
                         <button type="button" class="btn btn-secondary" onclick="closeDetailPanel(true)" data-i18n="btn_close">✕ إغلاق</button>
                     </div>
@@ -1257,17 +1558,6 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         </section>
     </div>
 </main>
-
-<!-- SAVED ITEMS MODAL -->
-<div class="saved-modal" id="savedModal" role="dialog" aria-modal="true">
-    <div class="saved-dialog">
-        <div class="saved-dialog-head">
-            <h2 class="saved-dialog-title" id="savedDialogTitle">🔖 المحفوظات</h2>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="closeSavedModal()">✕</button>
-        </div>
-        <div class="saved-dialog-body" id="savedDialogBody"><div class="saved-empty">جاري التحميل...</div></div>
-    </div>
-</div>
 
 <!-- MOBILE SEARCH MODAL -->
 <div class="mobile-search-modal" id="mobileSearchModal">
@@ -1300,9 +1590,9 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         <span style="font-size:17px;">🔍</span>
         <span data-i18n="btn_search">البحث</span>
     </button>
-    <button type="button" class="mobile-nav-btn" onclick="openSidebar()">
-        <span style="font-size:17px;">📁</span>
-        <span data-i18n="sidebar_categories_short">الأقسام</span>
+    <button type="button" class="mobile-nav-btn" onclick="openFavorites()">
+        <span style="font-size:17px;">🔖</span>
+        <span data-i18n="my_favorites">المحفوظات</span>
     </button>
 </nav>
 
@@ -1341,32 +1631,6 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     </div>
 </footer>
 
-<!-- Firebase: Google Authentication + Cloud Firestore -->
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script>
-const FALAK_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAy1RGH9sYwRX0iFQWurCJn5CjrTQU1QcM",
-  authDomain: "midadd.firebaseapp.com",
-  projectId: "midadd",
-  storageBucket: "midadd.firebasestorage.app",
-  messagingSenderId: "435609748935",
-  appId: "1:435609748935:web:9bfeb3fa6912fcb58285e2",
-  measurementId: "G-JHND6ZH0NW"
-};
-try {
-  if (!firebase.apps.length) firebase.initializeApp(FALAK_FIREBASE_CONFIG);
-  window.falakAuth = firebase.auth();
-  window.falakDb = firebase.firestore();
-  window.falakGoogleProvider = new firebase.auth.GoogleAuthProvider();
-  window.falakFirebaseReady = true;
-} catch (e) {
-  console.error("Falak Firebase initialization failed:", e);
-  window.falakFirebaseReady = false;
-}
-</script>
-
 <script>
 /* =========================================================
    CONFIG
@@ -1375,8 +1639,22 @@ const TMDB_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNjBmMDc1Y2YzNmM2ZGZi
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 const IMAGE_THUMB = 'https://image.tmdb.org/t/p/w92';
+const IMAGE_FAV = 'https://image.tmdb.org/t/p/w200';
 const SITE_DOMAIN = 'https://falak.tv';
 const MAX_SEARCH_CACHE = 50;
+
+/* ===== FIREBASE CONFIG (falaak project) ===== */
+const FIREBASE_VERSION = '10.12.5';
+const FIREBASE_CDN = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
+const firebaseConfig = {
+    apiKey: "AIzaSyAzjr9eqiSYw1VJs_nYsEYvWrHbTksaUBM",
+    authDomain: "falaak.firebaseapp.com",
+    projectId: "falaak",
+    storageBucket: "falaak.firebasestorage.app",
+    messagingSenderId: "1029073020155",
+    appId: "1:1029073020155:web:a1968c182ef284bcd2fc5e",
+    measurementId: "G-B8KF75TCRT"
+};
 
 let currentLang = localStorage.getItem('falak_lang') || 'ar';
 let currentTMDBLang = 'ar-SA';
@@ -1389,105 +1667,7 @@ let desktopSearchCtrl = null;
 let mobileSearchCtrl = null;
 let recentSearches = JSON.parse(localStorage.getItem('falak_recent_searches') || '[]');
 
-let falakCurrentUser = null;
-let falakSavedItems = new Map();
-let falakSavedUnsubscribe = null;
-
-const ACCOUNT_TEXT = {
- ar:{login:'تسجيل الدخول',saved:'المحفوظات',save:'حفظ',remove:'إزالة من المحفوظات',empty:'لا توجد أعمال محفوظة بعد.',required:'سجّل الدخول أولاً لحفظ أعمالك ومزامنتها بين أجهزتك.',logout:'تسجيل الخروج',account:'حسابي'},
- en:{login:'Sign in',saved:'Saved',save:'Save',remove:'Remove from saved',empty:'No saved titles yet.',required:'Sign in first to save titles and sync them across your devices.',logout:'Sign out',account:'Account'},
- fr:{login:'Connexion',saved:'Favoris',save:'Enregistrer',remove:'Retirer des favoris',empty:'Aucun titre enregistré.',required:'Connectez-vous pour enregistrer et synchroniser vos titres.',logout:'Déconnexion',account:'Compte'},
- es:{login:'Iniciar sesión',saved:'Guardados',save:'Guardar',remove:'Quitar de guardados',empty:'No hay títulos guardados.',required:'Inicia sesión para guardar y sincronizar tus títulos.',logout:'Cerrar sesión',account:'Cuenta'},
- tr:{login:'Giriş yap',saved:'Kaydedilenler',save:'Kaydet',remove:'Kaydedilenlerden kaldır',empty:'Henüz kayıtlı içerik yok.',required:'İçerikleri kaydetmek ve senkronize etmek için giriş yapın.',logout:'Çıkış yap',account:'Hesap'}
-};
-function accountText(k){return (ACCOUNT_TEXT[currentLang]||ACCOUNT_TEXT.en)[k]||k}
-function savedDocId(m){return `${m.mediaType||m.media_type||'movie'}_${m.id}`}
-function isMediaSaved(m){return !!(m&&falakCurrentUser&&falakSavedItems.has(savedDocId(m)))}
-
-function updateAuthUI(){
- const btn=document.getElementById('authBtn'), count=document.getElementById('savedCount');
- const sl=document.getElementById('savedLabel'), save=document.getElementById('saveMediaBtnLabel');
- if(sl) sl.textContent=accountText('saved');
- if(count) count.textContent=String(falakSavedItems.size);
- if(save&&selectedMedia) save.textContent=isMediaSaved(selectedMedia)?accountText('remove'):accountText('save');
- if(btn) btn.innerHTML=falakCurrentUser
-   ? (falakCurrentUser.photoURL?`<img class="user-avatar" src="${escapeHtml(falakCurrentUser.photoURL)}" alt="">`:'<span>👤</span>')+`<span id="authBtnLabel">${accountText('account')}</span>`
-   : `<span>🔐</span><span id="authBtnLabel">${accountText('login')}</span>`;
-}
-
-function renderAccountMenu(){
- const menu=document.getElementById('accountMenu'); if(!menu||!falakCurrentUser)return;
- const photo=falakCurrentUser.photoURL?`<img class="user-avatar" src="${escapeHtml(falakCurrentUser.photoURL)}" alt="">`:'<div class="user-avatar" style="display:grid;place-items:center;background:var(--surface-hover)">👤</div>';
- menu.innerHTML=`<div class="account-user-info">${photo}<div style="min-width:0"><div class="account-user-name">${escapeHtml(falakCurrentUser.displayName||'')}</div><div class="account-user-email">${escapeHtml(falakCurrentUser.email||'')}</div></div></div>
- <button class="account-menu-item" onclick="openSavedModal();closeAccountMenu()">🔖 ${accountText('saved')}</button>
- <button class="account-menu-item" onclick="signOutFalak()">🚪 ${accountText('logout')}</button>`;
-}
-function handleAuthButton(){if(falakCurrentUser){renderAccountMenu();document.getElementById('accountMenu')?.classList.toggle('open')}else signInWithGoogle()}
-function closeAccountMenu(){document.getElementById('accountMenu')?.classList.remove('open')}
-
-async function signInWithGoogle(){
- if(!window.falakFirebaseReady){showToast('Firebase غير مهيأ. تحقق من إعدادات Firebase.');return}
- try{await window.falakAuth.signInWithPopup(window.falakGoogleProvider)}
- catch(e){console.error(e);if(e.code!=='auth/popup-closed-by-user')showToast(currentLang==='ar'?'تعذر تسجيل الدخول عبر Google.':'Google sign-in failed.')}
-}
-async function signOutFalak(){closeAccountMenu();try{await window.falakAuth.signOut()}catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر تسجيل الخروج.':'Sign-out failed.')}}
-
-function startSavedListener(user){
- if(falakSavedUnsubscribe){falakSavedUnsubscribe();falakSavedUnsubscribe=null}
- falakSavedItems=new Map(); updateAuthUI();
- if(!user)return;
- falakSavedUnsubscribe=window.falakDb.collection('users').doc(user.uid).collection('saved')
- .orderBy('savedAt','desc').onSnapshot(snap=>{
-   falakSavedItems=new Map();
-   snap.forEach(d=>falakSavedItems.set(d.id,{id:d.id,...d.data()}));
-   updateAuthUI();
-   if(document.getElementById('savedModal')?.classList.contains('active'))renderSavedModal();
- },e=>{console.error(e);showToast(currentLang==='ar'?'تعذر تحميل المحفوظات.':'Could not load saved items.')});
-}
-
-async function toggleSaveCurrentMedia(){
- if(!selectedMedia)return;
- if(!falakCurrentUser){showToast(accountText('required'));await signInWithGoogle();return}
- const id=savedDocId(selectedMedia), ref=window.falakDb.collection('users').doc(falakCurrentUser.uid).collection('saved').doc(id);
- try{
-   if(falakSavedItems.has(id)){await ref.delete();showToast(currentLang==='ar'?'🗑️ تمت إزالة العمل من المحفوظات.':'Removed from saved.')}
-   else{
-    await ref.set({mediaId:Number(selectedMedia.id),mediaType:selectedMedia.mediaType||'movie',title:selectedMedia.title||selectedMedia.name||'—',
-      overview:selectedMedia.overview||'',posterPath:selectedMedia.poster_path||'',backdropPath:selectedMedia.backdrop_path||'',
-      voteAverage:Number(selectedMedia.vote_average||0),releaseDate:selectedMedia.release_date||selectedMedia.first_air_date||'',
-      savedAt:firebase.firestore.FieldValue.serverTimestamp()});
-    showToast(currentLang==='ar'?'🔖 تم حفظ العمل في حسابك.':'Saved to your account.');
-   }
- }catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر تحديث المحفوظات.':'Could not update saved items.')}
-}
-async function removeSavedItem(id){
- if(!falakCurrentUser)return;
- try{await window.falakDb.collection('users').doc(falakCurrentUser.uid).collection('saved').doc(id).delete()}
- catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر إزالة العمل.':'Could not remove item.')}
-}
-function openSavedModal(){
- closeAccountMenu();const m=document.getElementById('savedModal');if(!m)return;m.classList.add('active');
- if(!falakCurrentUser){document.getElementById('savedDialogBody').innerHTML=`<div class="auth-note"><div style="font-size:30px">🔐</div><div>${escapeHtml(accountText('required'))}</div><button class="btn btn-primary btn-sm" onclick="signInWithGoogle()">Google — ${escapeHtml(accountText('login'))}</button></div>`;return}
- renderSavedModal();
-}
-function closeSavedModal(){document.getElementById('savedModal')?.classList.remove('active')}
-function renderSavedModal(){
- const body=document.getElementById('savedDialogBody');if(!body)return;
- const items=[...falakSavedItems.values()];
- if(!items.length){body.innerHTML=`<div class="saved-empty"><div style="font-size:36px">🔖</div>${escapeHtml(accountText('empty'))}</div>`;return}
- body.innerHTML=`<div class="saved-grid">${items.map(x=>{
-  const poster=x.posterPath?`${IMAGE_BASE}${x.posterPath}`:'';const type=x.mediaType||'movie';
-  return `<article class="movie-card saved-card" data-id="${Number(x.mediaId)}" data-type="${escapeHtml(type)}"><div class="card-poster-wrap">
-  ${poster?`<img src="${escapeHtml(poster)}" alt="${escapeHtml(x.title||'')}" loading="lazy">`:'<div style="width:100%;height:100%;background:var(--bg-elevated)"></div>'}
-  <span class="card-meta-badge">${type==='tv'?t('badge_tv'):t('badge_movie')}</span><div class="card-play-overlay"><div class="card-play-btn">▶</div></div></div>
-  <div class="card-info"><h3 class="card-title">${escapeHtml(x.title||'—')}</h3><div class="card-tags"><span>${escapeHtml((x.releaseDate||'').substring(0,4)||'—')}</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();removeSavedItem('${escapeHtml(x.id)}')">🗑️</button></div></div></article>`;
- }).join('')}</div>`;
- body.querySelectorAll('.saved-card').forEach(c=>c.addEventListener('click',()=>{closeSavedModal();openMediaDetails(Number(c.dataset.id),c.dataset.type,true)}));
-}
-function setupFirebaseAuth(){
- if(!window.falakFirebaseReady)return;
- window.falakAuth.onAuthStateChanged(user=>{falakCurrentUser=user||null;startSavedListener(falakCurrentUser);updateAuthUI();if(falakCurrentUser)renderAccountMenu()});
-}
+let favDrawerOpen = false;
 
 /* =========================================================
    LANGUAGES & TRANSLATIONS
@@ -1543,7 +1723,25 @@ ar: {
     toast_link_copied: "📋 تم نسخ رابط العمل بنجاح!",
     toast_share_fail: "تعذر نسخ الرابط",
     doc_title: "فلك Falak — مشاهدة أحدث الأفلام والمسلسلات مترجمة مجاناً بجودة 4K/HD",
-    doc_title_item: "مشاهدة {title} أونلاين مترجم بجودة عالية HD — فلك Falak"
+    doc_title_item: "مشاهدة {title} أونلاين مترجم بجودة عالية HD — فلك Falak",
+
+    login_btn: "تسجيل الدخول",
+    my_account: "حسابي",
+    signout_btn: "تسجيل الخروج",
+    my_favorites: "المحفوظات",
+    favorites_title: "🔖 قائمة المحفوظات",
+    favorites_empty: "لا توجد عناصر محفوظة بعد.",
+    fav_guest_note: "سجّل الدخول بحساب جوجل لمزامنة محفوظاتك على جميع أجهزتك.",
+    fav_signed_note: "محفوظاتك محفوظة سحابياً في حسابك ولا تفقدها أبداً.",
+    btn_add_fav: "أضف للمحفوظات",
+    btn_in_fav: "في المحفوظات",
+    fav_remove: "إزالة",
+    toast_fav_added: "⭐ تمت الإضافة إلى المحفوظات",
+    toast_fav_removed: "🗑️ تمت الإزالة من المحفوظات",
+    toast_signed_in: "✅ تم تسجيل الدخول بنجاح",
+    toast_signed_out: "👋 تم تسجيل الخروج",
+    toast_auth_error: "تعذر تسجيل الدخول، حاول مرة أخرى",
+    toast_auth_loading: "⏳ جاري تحميل خدمة الحساب..."
 },
 en: {
     nav_home: "Home", nav_movies: "Movies", nav_series: "TV Shows",
@@ -1587,7 +1785,25 @@ en: {
     toast_link_copied: "📋 Link copied to clipboard!",
     toast_share_fail: "Failed to copy link",
     doc_title: "Falak — Watch Movies & TV Series Online Free in 4K/HD",
-    doc_title_item: "Watch {title} Online in Full HD — Falak"
+    doc_title_item: "Watch {title} Online in Full HD — Falak",
+
+    login_btn: "Sign in",
+    my_account: "My Account",
+    signout_btn: "Sign out",
+    my_favorites: "My List",
+    favorites_title: "🔖 My List",
+    favorites_empty: "No saved items yet.",
+    fav_guest_note: "Sign in with Google to sync your list across all your devices.",
+    fav_signed_note: "Your list is safely stored in your cloud account.",
+    btn_add_fav: "Add to My List",
+    btn_in_fav: "In My List",
+    fav_remove: "Remove",
+    toast_fav_added: "⭐ Added to your list",
+    toast_fav_removed: "🗑️ Removed from your list",
+    toast_signed_in: "✅ Signed in successfully",
+    toast_signed_out: "👋 Signed out",
+    toast_auth_error: "Sign-in failed, please try again",
+    toast_auth_loading: "⏳ Loading account service..."
 },
 fr: {
     nav_home: "Accueil", nav_movies: "Films", nav_series: "Séries",
@@ -1629,7 +1845,25 @@ fr: {
     toast_link_copied: "📋 Lien copié avec succès !",
     toast_share_fail: "Échec de la copie",
     doc_title: "Falak — Films et Séries en Streaming Gratuit HD",
-    doc_title_item: "Regarder {title} en streaming HD — Falak"
+    doc_title_item: "Regarder {title} en streaming HD — Falak",
+
+    login_btn: "Connexion",
+    my_account: "Mon compte",
+    signout_btn: "Déconnexion",
+    my_favorites: "Ma liste",
+    favorites_title: "🔖 Ma liste",
+    favorites_empty: "Aucun élément enregistré.",
+    fav_guest_note: "Connectez-vous avec Google pour synchroniser votre liste sur tous vos appareils.",
+    fav_signed_note: "Votre liste est sauvegardée dans votre compte cloud.",
+    btn_add_fav: "Ajouter à ma liste",
+    btn_in_fav: "Dans ma liste",
+    fav_remove: "Retirer",
+    toast_fav_added: "⭐ Ajouté à votre liste",
+    toast_fav_removed: "🗑️ Retiré de votre liste",
+    toast_signed_in: "✅ Connexion réussie",
+    toast_signed_out: "👋 Déconnecté",
+    toast_auth_error: "Échec de la connexion, réessayez",
+    toast_auth_loading: "⏳ Chargement du service..."
 },
 es: {
     nav_home: "Inicio", nav_movies: "Películas", nav_series: "Series",
@@ -1671,7 +1905,25 @@ es: {
     toast_link_copied: "📋 ¡Enlace copiado!",
     toast_share_fail: "Error al copiar enlace",
     doc_title: "Falak — Ver Películas y Series Gratis en HD",
-    doc_title_item: "Ver {title} Online en HD — Falak"
+    doc_title_item: "Ver {title} Online en HD — Falak",
+
+    login_btn: "Iniciar sesión",
+    my_account: "Mi cuenta",
+    signout_btn: "Cerrar sesión",
+    my_favorites: "Mi lista",
+    favorites_title: "🔖 Mi lista",
+    favorites_empty: "Aún no hay elementos guardados.",
+    fav_guest_note: "Inicia sesión con Google para sincronizar tu lista en todos tus dispositivos.",
+    fav_signed_note: "Tu lista se guarda de forma segura en tu cuenta.",
+    btn_add_fav: "Añadir a Mi lista",
+    btn_in_fav: "En Mi lista",
+    fav_remove: "Quitar",
+    toast_fav_added: "⭐ Añadido a tu lista",
+    toast_fav_removed: "🗑️ Eliminado de tu lista",
+    toast_signed_in: "✅ Sesión iniciada",
+    toast_signed_out: "👋 Sesión cerrada",
+    toast_auth_error: "Error al iniciar sesión, inténtalo de nuevo",
+    toast_auth_loading: "⏳ Cargando servicio..."
 },
 tr: {
     nav_home: "Anasayfa", nav_movies: "Filmler", nav_series: "Diziler",
@@ -1713,7 +1965,25 @@ tr: {
     toast_link_copied: "📋 Bağlantı kopyalandı!",
     toast_share_fail: "Kopyalama başarısız",
     doc_title: "Falak — HD Film ve Dizi İzle",
-    doc_title_item: "{title} Online HD İzle — Falak"
+    doc_title_item: "{title} Online HD İzle — Falak",
+
+    login_btn: "Giriş yap",
+    my_account: "Hesabım",
+    signout_btn: "Çıkış yap",
+    my_favorites: "Listem",
+    favorites_title: "🔖 Listem",
+    favorites_empty: "Henüz kayıtlı öğe yok.",
+    fav_guest_note: "Listenizi tüm cihazlarınızda eşitlemek için Google ile giriş yapın.",
+    fav_signed_note: "Listeniz bulut hesabınızda güvenle saklanır.",
+    btn_add_fav: "Listeme ekle",
+    btn_in_fav: "Listemde",
+    fav_remove: "Kaldır",
+    toast_fav_added: "⭐ Listenize eklendi",
+    toast_fav_removed: "🗑️ Listenizden kaldırıldı",
+    toast_signed_in: "✅ Giriş başarılı",
+    toast_signed_out: "👋 Çıkış yapıldı",
+    toast_auth_error: "Giriş başarısız, tekrar deneyin",
+    toast_auth_loading: "⏳ Hesap servisi yükleniyor..."
 }
 };
 
@@ -1845,7 +2115,6 @@ function updateDynamicSEO(media, season, episode, permalink) {
         if (twDesc) twDesc.setAttribute('content', defaultDesc);
         if (twImage) twImage.setAttribute('content', defaultImg);
 
-        // Remove media JSON-LD
         document.getElementById('structuredDataMedia').textContent = '';
         return;
     }
@@ -1875,7 +2144,6 @@ function updateDynamicSEO(media, season, episode, permalink) {
     if (twDesc) twDesc.setAttribute('content', descText);
     if (twImage) twImage.setAttribute('content', posterUrl);
 
-    // Inject Schema.org JSON-LD (Movie / TVSeries Rich Snippet)
     injectMediaSchema(media, season, episode, currentCanonicalUrl, posterUrl);
 }
 
@@ -1923,11 +2191,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupKeyboardShortcuts();
     setupHeaderScroll();
     setupPopStateListener();
-    setupFirebaseAuth();
-    document.getElementById('savedModal')?.addEventListener('click',e=>{if(e.target.id==='savedModal')closeSavedModal()});
-    document.addEventListener('click',e=>{if(!e.target.closest('.account-actions'))closeAccountMenu()});
+    setupAuthUI();
+    initFirebase();
 
-    // Check URL Permalinks on Load
     checkInitialURLRoute();
 });
 
@@ -1958,7 +2224,6 @@ async function checkInitialURLRoute() {
 
     if (id && (type === 'movie' || type === 'tv')) {
         await openMediaDetails(parseInt(id, 10), type, false, s, ep);
-        // If query specified season/episode or direct movie, auto-start player smoothly
         loadVideoPlayer(false);
     }
 }
@@ -1986,7 +2251,6 @@ async function shareCurrentMedia() {
         }
     }
 
-    // Fallback Clipboard copy
     try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             await navigator.clipboard.writeText(url);
@@ -2082,9 +2346,6 @@ function applyTranslations() {
     document.getElementById('heroDynamicTitle').innerHTML =
         `${t('hero_title_1')}<br><span>${t('hero_title_2')}</span>`;
 
-    updateAuthUI();
-    if (falakCurrentUser) renderAccountMenu();
-
     if (!selectedMedia) {
         document.title = t('doc_title');
     }
@@ -2093,6 +2354,12 @@ function applyTranslations() {
     brandEl.innerHTML = currentLang === 'ar' ? 'فلك<span>.</span>' : 'Falak<span>.</span>';
 
     document.getElementById('footerCopyright').textContent = t('footer_copy');
+
+    document.getElementById('favDrawerTitle').textContent = t('favorites_title');
+
+    updateAuthUI();
+    updateFavButtonState();
+    if (favDrawerOpen) renderFavoritesList();
 }
 
 function buildStaticUI() {
@@ -2422,12 +2689,15 @@ function renderMediaCards(container, list, defaultType) {
         return;
     }
 
+    const api = getAuthAPI();
+
     container.innerHTML = list.map(item => {
         const type = item.media_type || defaultType;
         const title = item.title || item.name || '—';
         const poster = item.poster_path ? `${IMAGE_BASE}${item.poster_path}` : '';
         const year = (item.release_date || item.first_air_date || '').substring(0, 4) || '—';
         const rating = Number(item.vote_average || 0).toFixed(1);
+        const inFav = api ? api.isFavorite(type, item.id) : false;
 
         return `
             <article class="movie-card" data-id="${item.id}" data-type="${type}" role="button" tabindex="0">
@@ -2436,6 +2706,14 @@ function renderMediaCards(container, list, defaultType) {
                         ? `<img src="${poster}" alt="${escapeHtml(title)}" loading="lazy">`
                         : `<div style="width:100%;height:100%;background:var(--bg-elevated);"></div>`}
                     <span class="card-meta-badge">${type === 'tv' ? t('badge_tv') : t('badge_movie')}</span>
+                    <button type="button" class="card-fav-quick ${inFav ? 'active' : ''}"
+                            data-quick-fav="1"
+                            data-id="${item.id}" data-type="${type}"
+                            data-title="${escapeHtml(title)}"
+                            data-poster="${item.poster_path || ''}"
+                            data-rating="${item.vote_average || 0}"
+                            data-year="${year === '—' ? '' : year}"
+                            aria-label="Toggle favorite">${inFav ? '★' : '☆'}</button>
                     <div class="card-play-overlay">
                         <div class="card-play-btn">▶</div>
                     </div>
@@ -2453,9 +2731,29 @@ function renderMediaCards(container, list, defaultType) {
 
     container.querySelectorAll('.movie-card').forEach(card => {
         const open = () => openMediaDetails(parseInt(card.dataset.id, 10), card.dataset.type, true);
-        card.addEventListener('click', open);
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('[data-quick-fav]')) return;
+            open();
+        });
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+        });
+    });
+
+    container.querySelectorAll('[data-quick-fav]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const authApi = getAuthAPI();
+            if (!authApi) { showToast(t('toast_auth_loading')); return; }
+            const added = await authApi.toggleFavorite({
+                id: parseInt(btn.dataset.id, 10),
+                mediaType: btn.dataset.type,
+                title: btn.dataset.title,
+                poster_path: btn.dataset.poster,
+                vote_average: Number(btn.dataset.rating) || 0,
+                year: btn.dataset.year || ''
+            });
+            showToast(added ? t('toast_fav_added') : t('toast_fav_removed'));
         });
     });
 }
@@ -2484,7 +2782,6 @@ async function openMediaDetails(id, type, updateHistory = true, targetSeason = 1
         );
         const data = await res.json();
         selectedMedia = { ...data, mediaType: type };
-        updateAuthUI();
         currentSeason = targetSeason;
         currentEpisode = targetEpisode;
 
@@ -2525,9 +2822,9 @@ async function openMediaDetails(id, type, updateHistory = true, targetSeason = 1
         document.getElementById('startWatchBtn').onclick = () => loadVideoPlayer(true);
 
         panel.classList.add('active');
+        updateFavButtonState();
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        // Update Permalink & SEO
         if (updateHistory) {
             updateURL(selectedMedia, currentSeason, currentEpisode, true);
         } else {
@@ -2775,8 +3072,8 @@ function setupKeyboardShortcuts() {
             document.getElementById('langDropdownPanel').classList.remove('open');
             closeMobileSearch();
             closeSidebar();
-            closeSavedModal();
-            closeAccountMenu();
+            closeFavorites();
+            closeAuthDropdown();
         }
     });
 }
@@ -2786,6 +3083,477 @@ function setupHeaderScroll() {
     window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
+}
+
+/* =========================================================
+   FIREBASE (LAZY LOADED)
+========================================================= */
+function initFirebase() {
+    const LOCAL_FAV_KEY = 'falak_favorites_guest';
+
+    Promise.all([
+        import(`${FIREBASE_CDN}/firebase-app.js`),
+        import(`${FIREBASE_CDN}/firebase-auth.js`),
+        import(`${FIREBASE_CDN}/firebase-firestore.js`)
+    ]).then(async ([appMod, authMod, fsMod]) => {
+        const { initializeApp } = appMod;
+        const {
+            getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+            getRedirectResult, signOut, onAuthStateChanged, setPersistence,
+            browserLocalPersistence
+        } = authMod;
+        const { getFirestore, doc, setDoc, deleteDoc, getDocs, collection } = fsMod;
+
+        const app = initializeApp(firebaseConfig);
+
+        // Analytics (optional / non-blocking)
+        import(`${FIREBASE_CDN}/firebase-analytics.js`)
+            .then(m => { try { m.getAnalytics(app); } catch (e) { /* ignore */ } })
+            .catch(() => { /* ignore */ });
+
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+        /* ---------- state ---------- */
+        let currentUser = null;
+        let favorites = [];
+        let authReady = false;
+        const changeListeners = [];
+
+        /* ---------- local storage (guests) ---------- */
+        function readLocalFavs() {
+            try { return JSON.parse(localStorage.getItem(LOCAL_FAV_KEY) || '[]'); }
+            catch (e) { return []; }
+        }
+        function writeLocalFavs(list) {
+            try { localStorage.setItem(LOCAL_FAV_KEY, JSON.stringify(list)); }
+            catch (e) { /* ignore */ }
+        }
+
+        function favKeyOf(item) {
+            return `${item.mediaType}_${item.id}`;
+        }
+
+        function emitChange() {
+            const state = { user: currentUser, favorites: favorites.slice(), ready: authReady };
+            changeListeners.forEach(cb => {
+                try { cb(state); } catch (e) { console.warn(e); }
+            });
+        }
+
+        function persistGuest() {
+            if (!currentUser) writeLocalFavs(favorites);
+        }
+
+        /* ---------- Firestore ---------- */
+        async function loadCloudFavorites(uid) {
+            try {
+                const snap = await getDocs(collection(db, 'users', uid, 'favorites'));
+                const list = [];
+                snap.forEach(d => list.push(d.data()));
+                list.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0));
+                return list;
+            } catch (e) {
+                console.warn('loadCloudFavorites failed', e);
+                return [];
+            }
+        }
+
+        async function mergeGuestFavorites(uid, guestList) {
+            if (!guestList || !guestList.length) return;
+            for (const item of guestList) {
+                try {
+                    await setDoc(doc(db, 'users', uid, 'favorites', favKeyOf(item)), item);
+                } catch (e) { /* ignore single failure */ }
+            }
+        }
+
+        /* ---------- public API ---------- */
+        async function toggleFavorite(item) {
+            const key = favKeyOf(item);
+            const exists = favorites.some(f => favKeyOf(f) === key);
+
+            if (exists) {
+                await removeFavorite(item.mediaType, item.id);
+                return false;
+            }
+
+            const record = {
+                id: item.id,
+                mediaType: item.mediaType,
+                title: item.title || '',
+                poster_path: item.poster_path || '',
+                vote_average: Number(item.vote_average) || 0,
+                year: item.year || '',
+                addedAt: Date.now()
+            };
+
+            favorites = [record, ...favorites.filter(f => favKeyOf(f) !== key)];
+            emitChange();
+            persistGuest();
+
+            if (currentUser) {
+                try {
+                    await setDoc(doc(db, 'users', currentUser.uid, 'favorites', key), record);
+                } catch (e) {
+                    console.warn('save favorite failed', e);
+                }
+            }
+            return true;
+        }
+
+        async function removeFavorite(mediaType, id) {
+            const key = `${mediaType}_${id}`;
+            favorites = favorites.filter(f => favKeyOf(f) !== key);
+            emitChange();
+            persistGuest();
+
+            if (currentUser) {
+                try {
+                    await deleteDoc(doc(db, 'users', currentUser.uid, 'favorites', key));
+                } catch (e) {
+                    console.warn('remove favorite failed', e);
+                }
+            }
+        }
+
+        async function signInWithGoogle() {
+            try {
+                await setPersistence(auth, browserLocalPersistence);
+            } catch (e) { /* ignore */ }
+
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                return result.user;
+            } catch (err) {
+                const code = err && err.code;
+                if (code === 'auth/popup-blocked' ||
+                    code === 'auth/operation-not-supported-in-this-environment' ||
+                    code === 'auth/web-storage-unsupported') {
+                    await signInWithRedirect(auth, googleProvider);
+                    return null;
+                }
+                throw err;
+            }
+        }
+
+        async function signOutUser() {
+            await signOut(auth);
+        }
+
+        window.FalakAuth = {
+            getUser: () => currentUser,
+            getFavorites: () => favorites.slice(),
+            isFavorite: (type, id) => favorites.some(f => f.mediaType === type && String(f.id) === String(id)),
+            toggleFavorite,
+            removeFavorite,
+            signIn: signInWithGoogle,
+            signOutUser,
+            onChange: (cb) => {
+                changeListeners.push(cb);
+                if (authReady) {
+                    try { cb({ user: currentUser, favorites: favorites.slice(), ready: authReady }); } catch (e) { /* ignore */ }
+                }
+            },
+            isReady: () => authReady
+        };
+
+        window.dispatchEvent(new CustomEvent('falak-auth-ready'));
+
+        /* ---------- redirect result (mobile fallback) ---------- */
+        getRedirectResult(auth).catch(() => { /* ignore */ });
+
+        /* ---------- auth state ---------- */
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const guest = readLocalFavs();
+                if (guest.length) {
+                    await mergeGuestFavorites(user.uid, guest);
+                    writeLocalFavs([]);
+                }
+                currentUser = user;
+                favorites = await loadCloudFavorites(user.uid);
+            } else {
+                currentUser = null;
+                favorites = readLocalFavs();
+            }
+            authReady = true;
+            emitChange();
+        });
+    }).catch(err => {
+        console.warn('Firebase SDK failed to load:', err);
+    });
+}
+
+/* =========================================================
+   AUTH & FAVORITES — UI LAYER
+========================================================= */
+function getAuthAPI() {
+    return window.FalakAuth || null;
+}
+
+function setupAuthUI() {
+    const bind = () => {
+        if (!window.FalakAuth || window.__falakAuthBound) return false;
+        window.__falakAuthBound = true;
+        window.FalakAuth.onChange(() => updateAuthUI());
+        updateAuthUI();
+        return true;
+    };
+
+    if (bind()) return;
+
+    window.addEventListener('falak-auth-ready', () => bind());
+
+    let tries = 0;
+    const iv = setInterval(() => {
+        if (bind() || ++tries > 40) clearInterval(iv);
+    }, 250);
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#authWrap')) closeAuthDropdown();
+    });
+}
+
+function closeAuthDropdown() {
+    const d = document.getElementById('authDropdown');
+    if (d) d.classList.remove('open');
+}
+
+function updateAuthUI() {
+    const api = getAuthAPI();
+    const user = api ? api.getUser() : null;
+    const favs = api ? api.getFavorites() : [];
+
+    const btn = document.getElementById('authBtn');
+    const label = document.getElementById('authBtnLabel');
+    const icon = document.getElementById('authIcon');
+    const avatar = document.getElementById('authAvatar');
+
+    if (user) {
+        btn.classList.add('signed-in');
+        const first = (user.displayName || '').split(' ')[0];
+        label.textContent = first || t('my_account');
+        icon.style.display = 'none';
+        if (user.photoURL) {
+            avatar.src = user.photoURL;
+            avatar.style.display = 'block';
+            avatar.referrerPolicy = 'no-referrer';
+        } else {
+            avatar.style.display = 'none';
+        }
+        const dropAvatar = document.getElementById('authDropAvatar');
+        if (dropAvatar) {
+            dropAvatar.src = user.photoURL || '';
+            dropAvatar.style.display = user.photoURL ? 'block' : 'none';
+            dropAvatar.referrerPolicy = 'no-referrer';
+        }
+        const n = document.getElementById('authDropName');
+        const em = document.getElementById('authDropEmail');
+        if (n) n.textContent = user.displayName || t('my_account');
+        if (em) em.textContent = user.email || '';
+        const note = document.getElementById('authSyncNote');
+        if (note) note.textContent = t('fav_signed_note');
+    } else {
+        btn.classList.remove('signed-in');
+        label.textContent = t('login_btn');
+        icon.style.display = 'inline';
+        avatar.style.display = 'none';
+    }
+
+    const badge = document.getElementById('favCountBadge');
+    if (badge) {
+        badge.textContent = favs.length > 99 ? '99+' : favs.length;
+        badge.classList.toggle('active', favs.length > 0);
+    }
+
+    updateFavButtonState();
+    if (favDrawerOpen) renderFavoritesList();
+}
+
+function handleAuthClick(e) {
+    if (e) e.stopPropagation();
+    const api = getAuthAPI();
+
+    if (!api) {
+        showToast(t('toast_auth_loading'));
+        return;
+    }
+
+    if (api.getUser()) {
+        document.getElementById('authDropdown').classList.toggle('open');
+        return;
+    }
+
+    doSignInFromFav();
+}
+
+function doSignInFromFav() {
+    const api = getAuthAPI();
+    if (!api) {
+        showToast(t('toast_auth_loading'));
+        return;
+    }
+    api.signIn()
+        .then(user => {
+            if (user) showToast(t('toast_signed_in'));
+        })
+        .catch(err => {
+            const code = err && err.code;
+            if (code === 'auth/popup-closed-by-user' ||
+                code === 'auth/cancelled-popup-request' ||
+                code === 'auth/user-cancelled') {
+                return;
+            }
+            console.error('Sign-in error:', err);
+            showToast(t('toast_auth_error'));
+        });
+}
+
+async function doSignOut() {
+    const api = getAuthAPI();
+    if (!api) return;
+    closeAuthDropdown();
+    try {
+        await api.signOutUser();
+        showToast(t('toast_signed_out'));
+    } catch (e) {
+        showToast(t('toast_auth_error'));
+    }
+}
+
+/* ---------- Favorites drawer ---------- */
+function openFavorites() {
+    favDrawerOpen = true;
+    renderFavoritesList();
+    document.getElementById('favoritesDrawer').classList.add('active');
+    document.getElementById('favBackdrop').classList.add('active');
+    closeSidebar();
+    closeAuthDropdown();
+}
+
+function closeFavorites() {
+    favDrawerOpen = false;
+    document.getElementById('favoritesDrawer').classList.remove('active');
+    document.getElementById('favBackdrop').classList.remove('active');
+}
+
+function renderFavoritesList() {
+    const wrap = document.getElementById('favoritesList');
+    const api = getAuthAPI();
+    const list = api ? api.getFavorites() : [];
+    const user = api ? api.getUser() : null;
+
+    document.getElementById('favDrawerTitle').textContent = t('favorites_title');
+
+    if (!list.length) {
+        wrap.innerHTML = `
+            <div class="fav-empty">
+                <div style="font-size:34px; margin-bottom:10px; opacity:.7;">🔖</div>
+                <div>${escapeHtml(t('favorites_empty'))}</div>
+                <div style="margin-top:10px; font-size:10.5px; color:var(--text-dim);">
+                    ${escapeHtml(user ? t('fav_signed_note') : t('fav_guest_note'))}
+                </div>
+                ${!user ? `<button type="button" class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="doSignInFromFav()">${escapeHtml(t('login_btn'))}</button>` : ''}
+            </div>
+        `;
+        return;
+    }
+
+    wrap.innerHTML = list.map(item => {
+        const title = escapeHtml(item.title || '—');
+        const poster = item.poster_path ? `${IMAGE_FAV}${item.poster_path}` : '';
+        const typeLabel = item.mediaType === 'tv' ? t('badge_tv') : t('badge_movie');
+        const year = item.year || '—';
+        const rating = Number(item.vote_average || 0).toFixed(1);
+
+        return `
+            <div class="fav-item" data-id="${item.id}" data-type="${item.mediaType}" role="button" tabindex="0">
+                ${poster
+                    ? `<img class="fav-item-poster" src="${poster}" alt="${title}" loading="lazy" referrerpolicy="no-referrer">`
+                    : `<div class="fav-item-poster"></div>`}
+                <div class="fav-item-body">
+                    <div class="fav-item-title" title="${title}">${title}</div>
+                    <div class="fav-item-meta">
+                        <span>${escapeHtml(typeLabel)}</span>
+                        <span>•</span>
+                        <span>${escapeHtml(year)}</span>
+                        <span>•</span>
+                        <span style="color:var(--gold); font-weight:800;">★ ${rating}</span>
+                    </div>
+                </div>
+                <button type="button" class="fav-remove-btn"
+                        data-remove-id="${item.id}"
+                        data-remove-type="${item.mediaType}"
+                        title="${escapeHtml(t('fav_remove'))}" aria-label="Remove">✕</button>
+            </div>
+        `;
+    }).join('');
+
+    wrap.querySelectorAll('.fav-item').forEach(el => {
+        el.addEventListener('click', (ev) => {
+            if (ev.target.closest('.fav-remove-btn')) return;
+            closeFavorites();
+            openMediaDetails(parseInt(el.dataset.id, 10), el.dataset.type, true);
+        });
+        el.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter') {
+                ev.preventDefault();
+                closeFavorites();
+                openMediaDetails(parseInt(el.dataset.id, 10), el.dataset.type, true);
+            }
+        });
+    });
+
+    wrap.querySelectorAll('.fav-remove-btn').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+            ev.stopPropagation();
+            const authApi = getAuthAPI();
+            if (!authApi) return;
+            await authApi.removeFavorite(btn.dataset.removeType, parseInt(btn.dataset.removeId, 10));
+            showToast(t('toast_fav_removed'));
+        });
+    });
+}
+
+/* ---------- Detail panel favorite toggle ---------- */
+function updateFavButtonState() {
+    const btn = document.getElementById('favToggleBtn');
+    if (!btn) return;
+
+    const api = getAuthAPI();
+    const inFav = (selectedMedia && api)
+        ? api.isFavorite(selectedMedia.mediaType, selectedMedia.id)
+        : false;
+
+    btn.classList.toggle('active', !!inFav);
+    const icon = document.getElementById('favToggleIcon');
+    const label = document.getElementById('favToggleLabel');
+    if (icon) icon.textContent = inFav ? '⭐' : '🔖';
+    if (label) label.textContent = inFav ? t('btn_in_fav') : t('btn_add_fav');
+}
+
+async function toggleCurrentFavorite() {
+    const api = getAuthAPI();
+    if (!api) {
+        showToast(t('toast_auth_loading'));
+        return;
+    }
+    if (!selectedMedia) return;
+
+    const added = await api.toggleFavorite({
+        id: selectedMedia.id,
+        mediaType: selectedMedia.mediaType,
+        title: selectedMedia.title || selectedMedia.name || '',
+        poster_path: selectedMedia.poster_path || '',
+        vote_average: selectedMedia.vote_average || 0,
+        year: (selectedMedia.release_date || selectedMedia.first_air_date || '').substring(0, 4)
+    });
+
+    showToast(added ? t('toast_fav_added') : t('toast_fav_removed'));
 }
 </script>
 </body>
