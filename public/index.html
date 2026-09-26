@@ -9,11 +9,7 @@
 <title id="metaDocTitle">فلك Falak — مشاهدة أحدث الأفلام والمسلسلات مترجمة مجاناً بجودة 4K/HD | Watch the Latest Movies & TV Shows Subtitled for Free in 4K/HD</title>
 
 <meta name="description" id="metaDescription" content="منصة فلك (Falak TV) لمشاهدة وتحميل الأفلام والمسلسلات المترجمة والمدبلجة أونلاين مجاناً بأعلى جودة HD و 4K. سيرفرات فائقة السرعة، بدون إعلانات مزعجة، وترجمة بلغات متعددة. | Falak TV is a platform for watching and downloading subtitled and dubbed movies and TV shows online for free in the highest HD and 4K quality. Ultra-fast servers, no annoying ads, and subtitles in multiple languages.">
-<meta name="theme-color" content="#ff1e27">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="فلك">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
+
 <meta name="keywords" content="فلك, Falak, Falak TV, مشاهدة أفلام, مسلسلات مترجمة, أفلام 2026, مسلسلات 2026, أفلام أونلاين, بث مباشر, سيما, سينما مجانية, watch movies online free, stream hd series, subtitled TV shows, 2026 movies, 2026 series, movies online, live streaming, free cinema">
 <meta name="author" content="Falak Network">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -1030,6 +1026,27 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     gap: 8px;
 }
 
+/* ===================== ACCOUNT & SAVED ===================== */
+.account-actions{display:flex;align-items:center;gap:7px}
+.account-btn,.saved-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 12px;border-radius:var(--radius-full);background:var(--surface);border:1px solid var(--border);color:#fff;font-size:12px;font-weight:800;transition:var(--transition);white-space:nowrap}
+.account-btn:hover,.saved-btn:hover{background:var(--surface-hover);border-color:var(--border-hover)}
+.saved-count{min-width:18px;height:18px;padding:0 4px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--primary);color:#fff;font-size:9px;font-weight:900}
+.user-avatar{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--border-hover)}
+.account-menu{position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:250px;background:var(--bg-elevated);border:1px solid var(--border-hover);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:8px;z-index:2000;display:none}
+.account-menu.open{display:block}
+.account-user-info{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.account-user-name{font-size:12px;font-weight:800;color:#fff}.account-user-email{font-size:10px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis}
+.account-menu-item{width:100%;padding:10px 12px;border-radius:var(--radius-md);text-align:start;color:var(--text-muted);font-size:12px;font-weight:700}
+.account-menu-item:hover{background:var(--surface-hover);color:#fff}
+.saved-modal{position:fixed;inset:0;z-index:2500;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
+.saved-modal.active{display:flex}.saved-dialog{width:min(1000px,100%);max-height:min(85vh,760px);overflow:hidden;display:flex;flex-direction:column;background:var(--bg-elevated);border:1px solid var(--border-hover);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg)}
+.saved-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;border-bottom:1px solid var(--border)}
+.saved-dialog-title{font-size:18px;font-weight:900}.saved-dialog-body{padding:16px;overflow-y:auto}
+.saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.saved-empty{text-align:center;padding:50px 20px;color:var(--text-muted);font-size:13px}
+.auth-note{padding:18px;border:1px dashed var(--border-hover);border-radius:var(--radius-lg);text-align:center;color:var(--text-muted)}
+.auth-note button{margin-top:12px}
+@media(max-width:850px){.account-btn span:not(.user-avatar),.saved-btn .saved-label{display:none}.account-btn,.saved-btn{width:38px;padding:0}}
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 850px) {
     .nav-links, .search-container { display: none; }
@@ -1099,6 +1116,17 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         </div>
 
         <div class="nav-actions">
+            <div class="account-actions">
+                <button type="button" class="saved-btn" id="savedBtn" onclick="openSavedModal()" aria-label="Saved">
+                    <span>🔖</span><span class="saved-label" id="savedLabel">المحفوظات</span><span class="saved-count" id="savedCount">0</span>
+                </button>
+                <div style="position:relative;">
+                    <button type="button" class="account-btn" id="authBtn" onclick="handleAuthButton()" aria-label="Login">
+                        <span>🔐</span><span id="authBtnLabel">تسجيل الدخول</span>
+                    </button>
+                    <div class="account-menu" id="accountMenu"></div>
+                </div>
+            </div>
             <div class="search-container" id="searchContainer">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
@@ -1198,6 +1226,7 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
                     <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
                         <button type="button" class="btn btn-primary" id="startWatchBtn" data-i18n="btn_watch">▶ مشاهدة العمل</button>
                         <button type="button" class="btn btn-share" id="shareMediaBtn" onclick="shareCurrentMedia()">🔗 <span data-i18n="btn_share">مشاركة</span></button>
+                        <button type="button" class="btn btn-secondary" id="saveMediaBtn" onclick="toggleSaveCurrentMedia()">🔖 <span id="saveMediaBtnLabel">حفظ</span></button>
                         <button type="button" class="btn btn-secondary" id="trailerBtn" style="display:none;" data-i18n="btn_trailer">🎬 الإعلان</button>
                         <button type="button" class="btn btn-secondary" onclick="closeDetailPanel(true)" data-i18n="btn_close">✕ إغلاق</button>
                     </div>
@@ -1228,6 +1257,17 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
         </section>
     </div>
 </main>
+
+<!-- SAVED ITEMS MODAL -->
+<div class="saved-modal" id="savedModal" role="dialog" aria-modal="true">
+    <div class="saved-dialog">
+        <div class="saved-dialog-head">
+            <h2 class="saved-dialog-title" id="savedDialogTitle">🔖 المحفوظات</h2>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeSavedModal()">✕</button>
+        </div>
+        <div class="saved-dialog-body" id="savedDialogBody"><div class="saved-empty">جاري التحميل...</div></div>
+    </div>
+</div>
 
 <!-- MOBILE SEARCH MODAL -->
 <div class="mobile-search-modal" id="mobileSearchModal">
@@ -1301,6 +1341,32 @@ html[dir="ltr"] .select-control { background-position: calc(100% - 10px) center;
     </div>
 </footer>
 
+<!-- Firebase: Google Authentication + Cloud Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+const FALAK_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAy1RGH9sYwRX0iFQWurCJn5CjrTQU1QcM",
+  authDomain: "midadd.firebaseapp.com",
+  projectId: "midadd",
+  storageBucket: "midadd.firebasestorage.app",
+  messagingSenderId: "435609748935",
+  appId: "1:435609748935:web:9bfeb3fa6912fcb58285e2",
+  measurementId: "G-JHND6ZH0NW"
+};
+try {
+  if (!firebase.apps.length) firebase.initializeApp(FALAK_FIREBASE_CONFIG);
+  window.falakAuth = firebase.auth();
+  window.falakDb = firebase.firestore();
+  window.falakGoogleProvider = new firebase.auth.GoogleAuthProvider();
+  window.falakFirebaseReady = true;
+} catch (e) {
+  console.error("Falak Firebase initialization failed:", e);
+  window.falakFirebaseReady = false;
+}
+</script>
+
 <script>
 /* =========================================================
    CONFIG
@@ -1322,6 +1388,106 @@ let searchDebounceTimer = null;
 let desktopSearchCtrl = null;
 let mobileSearchCtrl = null;
 let recentSearches = JSON.parse(localStorage.getItem('falak_recent_searches') || '[]');
+
+let falakCurrentUser = null;
+let falakSavedItems = new Map();
+let falakSavedUnsubscribe = null;
+
+const ACCOUNT_TEXT = {
+ ar:{login:'تسجيل الدخول',saved:'المحفوظات',save:'حفظ',remove:'إزالة من المحفوظات',empty:'لا توجد أعمال محفوظة بعد.',required:'سجّل الدخول أولاً لحفظ أعمالك ومزامنتها بين أجهزتك.',logout:'تسجيل الخروج',account:'حسابي'},
+ en:{login:'Sign in',saved:'Saved',save:'Save',remove:'Remove from saved',empty:'No saved titles yet.',required:'Sign in first to save titles and sync them across your devices.',logout:'Sign out',account:'Account'},
+ fr:{login:'Connexion',saved:'Favoris',save:'Enregistrer',remove:'Retirer des favoris',empty:'Aucun titre enregistré.',required:'Connectez-vous pour enregistrer et synchroniser vos titres.',logout:'Déconnexion',account:'Compte'},
+ es:{login:'Iniciar sesión',saved:'Guardados',save:'Guardar',remove:'Quitar de guardados',empty:'No hay títulos guardados.',required:'Inicia sesión para guardar y sincronizar tus títulos.',logout:'Cerrar sesión',account:'Cuenta'},
+ tr:{login:'Giriş yap',saved:'Kaydedilenler',save:'Kaydet',remove:'Kaydedilenlerden kaldır',empty:'Henüz kayıtlı içerik yok.',required:'İçerikleri kaydetmek ve senkronize etmek için giriş yapın.',logout:'Çıkış yap',account:'Hesap'}
+};
+function accountText(k){return (ACCOUNT_TEXT[currentLang]||ACCOUNT_TEXT.en)[k]||k}
+function savedDocId(m){return `${m.mediaType||m.media_type||'movie'}_${m.id}`}
+function isMediaSaved(m){return !!(m&&falakCurrentUser&&falakSavedItems.has(savedDocId(m)))}
+
+function updateAuthUI(){
+ const btn=document.getElementById('authBtn'), count=document.getElementById('savedCount');
+ const sl=document.getElementById('savedLabel'), save=document.getElementById('saveMediaBtnLabel');
+ if(sl) sl.textContent=accountText('saved');
+ if(count) count.textContent=String(falakSavedItems.size);
+ if(save&&selectedMedia) save.textContent=isMediaSaved(selectedMedia)?accountText('remove'):accountText('save');
+ if(btn) btn.innerHTML=falakCurrentUser
+   ? (falakCurrentUser.photoURL?`<img class="user-avatar" src="${escapeHtml(falakCurrentUser.photoURL)}" alt="">`:'<span>👤</span>')+`<span id="authBtnLabel">${accountText('account')}</span>`
+   : `<span>🔐</span><span id="authBtnLabel">${accountText('login')}</span>`;
+}
+
+function renderAccountMenu(){
+ const menu=document.getElementById('accountMenu'); if(!menu||!falakCurrentUser)return;
+ const photo=falakCurrentUser.photoURL?`<img class="user-avatar" src="${escapeHtml(falakCurrentUser.photoURL)}" alt="">`:'<div class="user-avatar" style="display:grid;place-items:center;background:var(--surface-hover)">👤</div>';
+ menu.innerHTML=`<div class="account-user-info">${photo}<div style="min-width:0"><div class="account-user-name">${escapeHtml(falakCurrentUser.displayName||'')}</div><div class="account-user-email">${escapeHtml(falakCurrentUser.email||'')}</div></div></div>
+ <button class="account-menu-item" onclick="openSavedModal();closeAccountMenu()">🔖 ${accountText('saved')}</button>
+ <button class="account-menu-item" onclick="signOutFalak()">🚪 ${accountText('logout')}</button>`;
+}
+function handleAuthButton(){if(falakCurrentUser){renderAccountMenu();document.getElementById('accountMenu')?.classList.toggle('open')}else signInWithGoogle()}
+function closeAccountMenu(){document.getElementById('accountMenu')?.classList.remove('open')}
+
+async function signInWithGoogle(){
+ if(!window.falakFirebaseReady){showToast('Firebase غير مهيأ. تحقق من إعدادات Firebase.');return}
+ try{await window.falakAuth.signInWithPopup(window.falakGoogleProvider)}
+ catch(e){console.error(e);if(e.code!=='auth/popup-closed-by-user')showToast(currentLang==='ar'?'تعذر تسجيل الدخول عبر Google.':'Google sign-in failed.')}
+}
+async function signOutFalak(){closeAccountMenu();try{await window.falakAuth.signOut()}catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر تسجيل الخروج.':'Sign-out failed.')}}
+
+function startSavedListener(user){
+ if(falakSavedUnsubscribe){falakSavedUnsubscribe();falakSavedUnsubscribe=null}
+ falakSavedItems=new Map(); updateAuthUI();
+ if(!user)return;
+ falakSavedUnsubscribe=window.falakDb.collection('users').doc(user.uid).collection('saved')
+ .orderBy('savedAt','desc').onSnapshot(snap=>{
+   falakSavedItems=new Map();
+   snap.forEach(d=>falakSavedItems.set(d.id,{id:d.id,...d.data()}));
+   updateAuthUI();
+   if(document.getElementById('savedModal')?.classList.contains('active'))renderSavedModal();
+ },e=>{console.error(e);showToast(currentLang==='ar'?'تعذر تحميل المحفوظات.':'Could not load saved items.')});
+}
+
+async function toggleSaveCurrentMedia(){
+ if(!selectedMedia)return;
+ if(!falakCurrentUser){showToast(accountText('required'));await signInWithGoogle();return}
+ const id=savedDocId(selectedMedia), ref=window.falakDb.collection('users').doc(falakCurrentUser.uid).collection('saved').doc(id);
+ try{
+   if(falakSavedItems.has(id)){await ref.delete();showToast(currentLang==='ar'?'🗑️ تمت إزالة العمل من المحفوظات.':'Removed from saved.')}
+   else{
+    await ref.set({mediaId:Number(selectedMedia.id),mediaType:selectedMedia.mediaType||'movie',title:selectedMedia.title||selectedMedia.name||'—',
+      overview:selectedMedia.overview||'',posterPath:selectedMedia.poster_path||'',backdropPath:selectedMedia.backdrop_path||'',
+      voteAverage:Number(selectedMedia.vote_average||0),releaseDate:selectedMedia.release_date||selectedMedia.first_air_date||'',
+      savedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    showToast(currentLang==='ar'?'🔖 تم حفظ العمل في حسابك.':'Saved to your account.');
+   }
+ }catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر تحديث المحفوظات.':'Could not update saved items.')}
+}
+async function removeSavedItem(id){
+ if(!falakCurrentUser)return;
+ try{await window.falakDb.collection('users').doc(falakCurrentUser.uid).collection('saved').doc(id).delete()}
+ catch(e){console.error(e);showToast(currentLang==='ar'?'تعذر إزالة العمل.':'Could not remove item.')}
+}
+function openSavedModal(){
+ closeAccountMenu();const m=document.getElementById('savedModal');if(!m)return;m.classList.add('active');
+ if(!falakCurrentUser){document.getElementById('savedDialogBody').innerHTML=`<div class="auth-note"><div style="font-size:30px">🔐</div><div>${escapeHtml(accountText('required'))}</div><button class="btn btn-primary btn-sm" onclick="signInWithGoogle()">Google — ${escapeHtml(accountText('login'))}</button></div>`;return}
+ renderSavedModal();
+}
+function closeSavedModal(){document.getElementById('savedModal')?.classList.remove('active')}
+function renderSavedModal(){
+ const body=document.getElementById('savedDialogBody');if(!body)return;
+ const items=[...falakSavedItems.values()];
+ if(!items.length){body.innerHTML=`<div class="saved-empty"><div style="font-size:36px">🔖</div>${escapeHtml(accountText('empty'))}</div>`;return}
+ body.innerHTML=`<div class="saved-grid">${items.map(x=>{
+  const poster=x.posterPath?`${IMAGE_BASE}${x.posterPath}`:'';const type=x.mediaType||'movie';
+  return `<article class="movie-card saved-card" data-id="${Number(x.mediaId)}" data-type="${escapeHtml(type)}"><div class="card-poster-wrap">
+  ${poster?`<img src="${escapeHtml(poster)}" alt="${escapeHtml(x.title||'')}" loading="lazy">`:'<div style="width:100%;height:100%;background:var(--bg-elevated)"></div>'}
+  <span class="card-meta-badge">${type==='tv'?t('badge_tv'):t('badge_movie')}</span><div class="card-play-overlay"><div class="card-play-btn">▶</div></div></div>
+  <div class="card-info"><h3 class="card-title">${escapeHtml(x.title||'—')}</h3><div class="card-tags"><span>${escapeHtml((x.releaseDate||'').substring(0,4)||'—')}</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();removeSavedItem('${escapeHtml(x.id)}')">🗑️</button></div></div></article>`;
+ }).join('')}</div>`;
+ body.querySelectorAll('.saved-card').forEach(c=>c.addEventListener('click',()=>{closeSavedModal();openMediaDetails(Number(c.dataset.id),c.dataset.type,true)}));
+}
+function setupFirebaseAuth(){
+ if(!window.falakFirebaseReady)return;
+ window.falakAuth.onAuthStateChanged(user=>{falakCurrentUser=user||null;startSavedListener(falakCurrentUser);updateAuthUI();if(falakCurrentUser)renderAccountMenu()});
+}
 
 /* =========================================================
    LANGUAGES & TRANSLATIONS
@@ -1757,6 +1923,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupKeyboardShortcuts();
     setupHeaderScroll();
     setupPopStateListener();
+    setupFirebaseAuth();
+    document.getElementById('savedModal')?.addEventListener('click',e=>{if(e.target.id==='savedModal')closeSavedModal()});
+    document.addEventListener('click',e=>{if(!e.target.closest('.account-actions'))closeAccountMenu()});
 
     // Check URL Permalinks on Load
     checkInitialURLRoute();
@@ -1912,6 +2081,9 @@ function applyTranslations() {
 
     document.getElementById('heroDynamicTitle').innerHTML =
         `${t('hero_title_1')}<br><span>${t('hero_title_2')}</span>`;
+
+    updateAuthUI();
+    if (falakCurrentUser) renderAccountMenu();
 
     if (!selectedMedia) {
         document.title = t('doc_title');
@@ -2312,6 +2484,7 @@ async function openMediaDetails(id, type, updateHistory = true, targetSeason = 1
         );
         const data = await res.json();
         selectedMedia = { ...data, mediaType: type };
+        updateAuthUI();
         currentSeason = targetSeason;
         currentEpisode = targetEpisode;
 
@@ -2602,6 +2775,8 @@ function setupKeyboardShortcuts() {
             document.getElementById('langDropdownPanel').classList.remove('open');
             closeMobileSearch();
             closeSidebar();
+            closeSavedModal();
+            closeAccountMenu();
         }
     });
 }
@@ -2611,34 +2786,6 @@ function setupHeaderScroll() {
     window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
-}
-  
-// ==================== SERVICE WORKER REGISTRATION ====================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('[PWA] Service Worker registered:', registration.scope);
-        
-        // فحص التحديثات كل ساعة
-        setInterval(() => registration.update(), 60 * 60 * 1000);
-        
-        // عندما يجد SW جديد
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // نسخة جديدة متوفرة
-              if (confirm('نسخة جديدة من فلك متوفرة! هل تريد التحديث الآن؟')) {
-                newWorker.postMessage('SKIP_WAITING');
-                window.location.reload();
-              }
-            }
-          });
-        });
-      })
-      .catch((err) => console.warn('[PWA] SW registration failed:', err));
-  });
 }
 </script>
 </body>
